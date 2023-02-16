@@ -25,7 +25,7 @@ public class MainController {
         this.authorizedClientService = authorizedClientService;
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/welcome")
     public String index(Model model, OAuth2AuthenticationToken authentication) {
         OAuth2AuthorizedClient authorizedClient = this.getAuthorizedClient(authentication);
         model.addAttribute("userName", authentication.getName());
