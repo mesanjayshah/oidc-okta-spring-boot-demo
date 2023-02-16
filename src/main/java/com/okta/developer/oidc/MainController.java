@@ -35,10 +35,12 @@ public class MainController {
 
     @RequestMapping("/userinfo")
     public String userinfo(Model model, OAuth2AuthenticationToken authentication) {
+
         OAuth2AuthorizedClient authorizedClient = this.getAuthorizedClient(authentication);
         Map userAttributes = Collections.emptyMap();
         String userInfoEndpointUri = authorizedClient.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUri();
+
         if (!StringUtils.isEmpty(userInfoEndpointUri)) {    // userInfoEndpointUri is optional for OIDC Clients
             userAttributes = WebClient.builder()
                     .filter(oauth2Credentials(authorizedClient)).build()
@@ -47,6 +49,7 @@ public class MainController {
                     .bodyToMono(Map.class).block();
         }
         model.addAttribute("userAttributes", userAttributes);
+
         return "userinfo";
     }
 
